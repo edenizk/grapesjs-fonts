@@ -282,6 +282,7 @@ function updateHead(editor, fonts) {
 }
 
 function updateUi(editor, fonts, opts) {
+    console.log('Updating', opts)
     const styleManager = editor.StyleManager
     const fontProperty = styleManager.getProperty(opts.sectorName || 'typography', 'font-family')
     if(!fontProperty) {
