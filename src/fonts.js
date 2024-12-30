@@ -186,6 +186,20 @@ function displayFonts(editor, config, fontsList) {
     }}>
             ${editor.I18n.t('grapesjs-fonts.Add font')}
           </button>
+        <button class="silex-button"
+            ?disabled=${!fontRef.value || activeFonts.length === 0}
+            type="button" @click=${() => {
+        addFont(
+            editor,
+            config,
+            fonts,
+            {family: searchInputRef.value.value, category: 'sans-serif', 
+                value: `${searchInputRef.value.value}, sans-serif`}
+        )
+        displayFonts(editor, config, fontsList)
+    }}>
+            ${editor.I18n.t('grapesjs-fonts.Add Custom font')}
+          </button>
         </div>
       </div>
       <hr/>
@@ -193,7 +207,9 @@ function displayFonts(editor, config, fontsList) {
         class="silex-form__element">
         <h2>${editor.I18n.t('grapesjs-fonts.Installed fonts')}</h2>
         <ol class="silex-list">
-        ${ map(fonts, f => html`
+        ${ map(fonts, f => {
+            // TODO: add here upload field for bounding custom fonts with file
+            return html`
           <li>
             <div class="silex-list__item__header">
               <h4>${f.name}</h4>
@@ -241,7 +257,7 @@ function displayFonts(editor, config, fontsList) {
     }}>${editor.I18n.t('grapesjs-fonts.Remove')}</button>
             </div>
           </li>
-        `) }
+        `}) }
         </ol>
       </div>
       <footer>
@@ -282,7 +298,6 @@ function updateHead(editor, fonts) {
 }
 
 function updateUi(editor, fonts, opts) {
-    console.log('Updating', opts)
     const styleManager = editor.StyleManager
     const fontProperty = styleManager.getProperty(opts.sectorName || 'typography', 'font-family')
     if(!fontProperty) {
