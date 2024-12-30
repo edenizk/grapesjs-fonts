@@ -187,7 +187,6 @@ function displayFonts(editor, config, fontsList) {
             ${editor.I18n.t('grapesjs-fonts.Add font')}
           </button>
         <button class="silex-button"
-            ?disabled=${!fontRef.value || activeFonts.length === 0}
             type="button" @click=${() => {
         addFont(
             editor,
