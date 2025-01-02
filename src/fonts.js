@@ -296,6 +296,19 @@ function updateHead(editor, fonts) {
     doc.head.insertAdjacentHTML('beforeend', html)
 }
 
+function wrapFontNamesWithQuotes(fontArray) {
+    return fontArray.map(fontFamily => {
+        const font = fontFamily.id || fontFamily.name;
+        const fonts = font.split(',').map(font => font.trim());
+        
+        if (!fonts[0].includes('"')) {
+            fonts[0] = `"${fonts[0]}"`;
+        }
+        
+        return {id: fonts.join(', '), label: fontFamily.label || fontFamily.name};
+    });
+}
+
 function updateUi(editor, fonts, opts) {
     const styleManager = editor.StyleManager
     const fontProperty = styleManager.getProperty(opts.sectorName || 'typography', 'font-family')
@@ -308,7 +321,8 @@ function updateUi(editor, fonts, opts) {
     } else if (fonts.length === 0) {
         fonts = defaults
     }
-    fontProperty.setOptions(fonts)
+
+    fontProperty.setOptions(wrapFontNamesWithQuotes(fonts))
 }
 
 export function refresh(editor, opts) {
