@@ -193,7 +193,7 @@ function displayFonts(editor, config, fontsList) {
             config,
             fonts,
             {family: searchInputRef.value.value, category: 'sans-serif', 
-                value: `${searchInputRef.value.value}, sans-serif`}
+                value: `"${searchInputRef.value.value}", sans-serif`}
         )
         displayFonts(editor, config, fontsList)
     }}>
@@ -332,7 +332,7 @@ export function refresh(editor, opts) {
 }
 
 function updateRules(editor, fonts, font, value) {
-    font.value = value
+    font.value = `${wrapFontNamesWithQuotes([value])[0]}, sans-serif`
 }
 
 function updateVariant(editor, fonts, font, variant, checked) {
