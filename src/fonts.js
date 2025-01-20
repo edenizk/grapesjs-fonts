@@ -188,12 +188,13 @@ function displayFonts(editor, config, fontsList) {
           </button>
         <button class="silex-button"
             type="button" @click=${() => {
+                const value = searchInputRef.value.value.replaceAll('"', '');
         addFont(
             editor,
             config,
             fonts,
-            {family: searchInputRef.value.value, category: 'sans-serif', 
-                value: `"${searchInputRef.value.value}", sans-serif`}
+            {family: value, category: 'sans-serif', 
+                value: `"${value}", sans-serif`}
         )
         displayFonts(editor, config, fontsList)
     }}>
